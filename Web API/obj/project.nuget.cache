@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "JZC8YsGYEfqPFVWAOn1MDpQxBUbo0Hw0tYXa8F9EL7irKiz70da1fpfFq8t9NhpSOWO5NrG/oMBSwkSqCaHM7g==",
+  "dgSpecHash": "PPT+XDCPByv7Td2RJ8RMeTjckT44S6WsVTVxKodSdmJBrSP7KI2Pjr0NJMAxM6qcViFHIiq/vX1YmzRbN7KkRw==",
   "success": true,
   "projectFilePath": "C:\\dev\\ASP.NET CORE\\Web API\\Web API\\Web API\\Web API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ibrah\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\ibrah\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
-    "C:\\Users\\ibrah\\.nuget\\packages\\bcrypt.net\\0.1.0\\bcrypt.net.0.1.0.nupkg.sha512",
+    "C:\\Users\\ibrah\\.nuget\\packages\\bcrypt.net-next\\4.0.0\\bcrypt.net-next.4.0.0.nupkg.sha512",
     "C:\\Users\\ibrah\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\ibrah\\.nuget\\packages\\mailkit\\2.12.0\\mailkit.2.12.0.nupkg.sha512",
     "C:\\Users\\ibrah\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.6\\microsoft.aspnetcore.authentication.jwtbearer.5.0.6.nupkg.sha512",
@@ -140,16 +140,5 @@
     "C:\\Users\\ibrah\\.nuget\\packages\\zxm.mailkit.abstractions\\1.0.0\\zxm.mailkit.abstractions.1.0.0.nupkg.sha512",
     "C:\\Users\\ibrah\\.nuget\\packages\\zxm.mailkit.extensions.aspnetcore\\1.0.0\\zxm.mailkit.extensions.aspnetcore.1.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
-      "libraryId": "BCrypt.Net",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  "logs": []
 }

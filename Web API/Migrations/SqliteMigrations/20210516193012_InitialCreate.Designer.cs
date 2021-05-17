@@ -9,7 +9,7 @@ using Web_API.Data;
 namespace Web_API.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteAppDbContext))]
-    [Migration("20210516124154_InitialCreate")]
+    [Migration("20210516193012_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

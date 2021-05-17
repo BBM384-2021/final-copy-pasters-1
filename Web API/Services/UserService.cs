@@ -128,7 +128,7 @@ namespace Web_API.Services
             var user = _mapper.Map<User>(model);
 
             // first registered user is an admin
-            var isFirstUser = _context.Users.Count() == 0;
+            var isFirstUser = !_context.Users.Any();
             user.Role = isFirstUser ? Role.Admin : Role.User;
             user.Created = DateTime.UtcNow;
             user.VerificationToken = RandomTokenString();

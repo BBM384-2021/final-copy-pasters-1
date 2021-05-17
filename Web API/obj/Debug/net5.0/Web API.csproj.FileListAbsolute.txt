@@ -77,7 +77,6 @@ C:\dev\ASP.NET CORE\Web API\Web API\Web API\obj\Debug\net5.0\Web API.pdb
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\obj\Debug\net5.0\Web API.genruntimeconfig.cache
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\Humanizer.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
-C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\BCrypt.Net.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\MailKit.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\Microsoft.OpenApi.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\MimeKit.dll
@@ -88,3 +87,4 @@ C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\Swashbuckle.AspNetC
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\zxm.MailKit.Abstractions.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\zxm.MailKit.Extensions.AspNetCore.dll
 C:\dev\ASP.NET CORE\Web API\Web API\Web API\obj\Debug\net5.0\Web API.MvcApplicationPartsAssemblyInfo.cs
+C:\dev\ASP.NET CORE\Web API\Web API\Web API\bin\Debug\net5.0\BCrypt.Net-Next.dll
