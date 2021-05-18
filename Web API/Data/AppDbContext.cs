@@ -6,7 +6,7 @@ namespace Web_API.Data
     public class AppDbContext: DbContext
     {
         public DbSet<User> Users { get; set; }
-        
+        // TODO: the place where I left off.
         protected readonly IConfiguration Configuration;
 
         public AppDbContext(IConfiguration configuration)
