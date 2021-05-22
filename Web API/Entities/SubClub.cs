@@ -17,11 +17,7 @@ namespace Web_API.Entities
         public ICollection<ReviewAndRate> ReviewAndRates { get; set; }
         public ICollection<OfflineEvent> OfflineEvents { get; set; }
         public ICollection<OnlineEvent> OnlineEvents { get; set; }
-        // public ICollection<Report> Reports { get; set; }
         public ICollection<Question> Questions { get; set; }
-        // public ICollection<Post> Posts { get; set; }
-        // public ICollection<BanRecord> BanRecords { get; set; }
-        // public ICollection<User> Users { get; set; }
         public ICollection<SubClubUser> SubClubUsers { get; set; }
     }
 }

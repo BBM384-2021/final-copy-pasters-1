@@ -330,14 +330,14 @@ namespace Web_API.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var verifyUrl = $"{origin}/user/verify-email?token={user.VerificationToken}";
+                var verifyUrl = $"{origin}/api/user/verify-email?token={user.VerificationToken}";
                 message = $@"<p>Please click the below link to verify your email address:</p>
                              <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
             }
             else
             {
                 message =
-                    $@"<p>Please use the below token to verify your email address with the <code>/users/verify-email</code> api route:</p>
+                    $@"<p>Please use the below token to verify your email address with the <code>/api/user/verify-email</code> api route:</p>
                              <p><code>{user.VerificationToken}</code></p>";
             }
 
@@ -355,10 +355,10 @@ namespace Web_API.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
                 message =
-                    $@"<p>If you don't know your password please visit the <a href=""{origin}/user/forgot-password"">forgot password</a> page.</p>";
+                    $@"<p>If you don't know your password please visit the <a href=""{origin}/api/user/forgot-password"">forgot password</a> page.</p>";
             else
                 message =
-                    "<p>If you don't know your password you can reset it via the <code>/users/forgot-password</code> api route.</p>";
+                    "<p>If you don't know your password you can reset it via the <code>/api/user/forgot-password</code> api route.</p>";
 
             _emailService.Send(
                 to: email,
@@ -374,7 +374,7 @@ namespace Web_API.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var resetUrl = $"{origin}/user/reset-password?token={user.ResetToken}";
+                var resetUrl = $"{origin}/api/user/reset-password?token={user.ResetToken}";
                 message =
                     $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
@@ -382,7 +382,7 @@ namespace Web_API.Services
             else
             {
                 message =
-                    $@"<p>Please use the below token to reset your password with the <code>/users/reset-password</code> api route:</p>
+                    $@"<p>Please use the below token to reset your password with the <code>/api/user/reset-password</code> api route:</p>
                              <p><code>{user.ResetToken}</code></p>";
             }
 
