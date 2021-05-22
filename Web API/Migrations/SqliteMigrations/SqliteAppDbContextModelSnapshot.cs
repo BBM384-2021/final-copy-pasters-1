@@ -16,6 +16,212 @@ namespace Web_API.Migrations.SqliteMigrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.6");
 
+            modelBuilder.Entity("Web_API.Entities.BanRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BanCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("BanRecords");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Club", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clubs");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.OfflineEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId");
+
+                    b.ToTable("OfflineEvents");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.OnlineEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("InvitationLink")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Platform")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId");
+
+                    b.ToTable("OnlineEvents");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId", "UserId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProofFilesUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId", "UserId");
+
+                    b.ToTable("Reports");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.ReviewAndRate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Rate")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Review")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubClubId");
+
+                    b.ToTable("ReviewAndRates");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClub", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("AverageRate")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("ClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClubId");
+
+                    b.ToTable("SubClubs");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClubUser", b =>
+                {
+                    b.Property<int>("SubClubId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("SubClubId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SubClubUsers");
+                });
+
             modelBuilder.Entity("Web_API.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -69,6 +275,220 @@ namespace Web_API.Migrations.SqliteMigrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Web_API.Entities.BanRecord", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClubUser", "SubClubUser")
+                        .WithOne("BanRecord")
+                        .HasForeignKey("Web_API.Entities.BanRecord", "SubClubId", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubClubUser");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.OfflineEvent", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClub", "SubClub")
+                        .WithMany("OfflineEvents")
+                        .HasForeignKey("SubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Web_API.Entities.Event", "Event", b1 =>
+                        {
+                            b1.Property<int>("OfflineEventId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<DateTime>("Date")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Subject")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Type")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("OfflineEventId");
+
+                            b1.ToTable("OfflineEvents");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OfflineEventId");
+                        });
+
+                    b.Navigation("Event");
+
+                    b.Navigation("SubClub");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.OnlineEvent", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClub", "SubClub")
+                        .WithMany("OnlineEvents")
+                        .HasForeignKey("SubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("Web_API.Entities.Event", "Event", b1 =>
+                        {
+                            b1.Property<int>("OnlineEventId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<DateTime>("Date")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Subject")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Type")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("OnlineEventId");
+
+                            b1.ToTable("OnlineEvents");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OnlineEventId");
+                        });
+
+                    b.Navigation("Event");
+
+                    b.Navigation("SubClub");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Post", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClubUser", "SubClubUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("SubClubId", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Web_API.Entities.Comment", "Comments", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("PostId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int?>("PostId1")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Text")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("PostId");
+
+                            b1.HasIndex("PostId1");
+
+                            b1.ToTable("Comments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PostId");
+
+                            b1.HasOne("Web_API.Entities.Post", "Post")
+                                .WithMany()
+                                .HasForeignKey("PostId1");
+
+                            b1.Navigation("Post");
+                        });
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("SubClubUser");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Question", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClub", "SubClub")
+                        .WithMany("Questions")
+                        .HasForeignKey("SubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Web_API.Entities.Choice", "Choices", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("QuestionId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("Text")
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("QuestionId");
+
+                            b1.ToTable("Choices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuestionId");
+                        });
+
+                    b.Navigation("Choices");
+
+                    b.Navigation("SubClub");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Report", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClubUser", "SubClubUser")
+                        .WithMany("Reports")
+                        .HasForeignKey("SubClubId", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubClubUser");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.ReviewAndRate", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClub", "SubClub")
+                        .WithMany("ReviewAndRates")
+                        .HasForeignKey("SubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubClub");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClub", b =>
+                {
+                    b.HasOne("Web_API.Entities.Club", "Club")
+                        .WithMany("SubClubs")
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Club");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClubUser", b =>
+                {
+                    b.HasOne("Web_API.Entities.SubClub", "SubClub")
+                        .WithMany("SubClubUsers")
+                        .HasForeignKey("SubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Web_API.Entities.User", "User")
+                        .WithMany("SubClubUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubClub");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Web_API.Entities.User", b =>
                 {
                     b.OwnsMany("Web_API.Entities.RefreshToken", "RefreshTokens", b1 =>
@@ -114,6 +534,38 @@ namespace Web_API.Migrations.SqliteMigrations
                         });
 
                     b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.Club", b =>
+                {
+                    b.Navigation("SubClubs");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClub", b =>
+                {
+                    b.Navigation("OfflineEvents");
+
+                    b.Navigation("OnlineEvents");
+
+                    b.Navigation("Questions");
+
+                    b.Navigation("ReviewAndRates");
+
+                    b.Navigation("SubClubUsers");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.SubClubUser", b =>
+                {
+                    b.Navigation("BanRecord");
+
+                    b.Navigation("Posts");
+
+                    b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("Web_API.Entities.User", b =>
+                {
+                    b.Navigation("SubClubUsers");
                 });
 #pragma warning restore 612, 618
         }

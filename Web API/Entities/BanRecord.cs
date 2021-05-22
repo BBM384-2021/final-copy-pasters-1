@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web_API.Entities
 {
     public class BanRecord
     {
         public int Id { get; set; }
-        public int BanCount { get; set; }
-        
-        [ForeignKey("SubClub")]
+        public int BanCount { set; get; }
         public int SubClubId { get; set; }
-        public SubClub SubClub { get; set; }
-        
-        [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("SubClubId, UserId")]
+        public SubClubUser SubClubUser { get; set; }
     }
 }

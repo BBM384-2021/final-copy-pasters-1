@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web_API.Entities
 {
@@ -8,14 +10,10 @@ namespace Web_API.Entities
         public int Id { get; set; }
         public string Text { get; set; }
         
-        public ICollection<Comment> Comments { get; set; }
-        
-        [ForeignKey("SubClub")]
         public int SubClubId { get; set; }
-        public SubClub SubClub { get; set; }
-        
-        [ForeignKey("User")]
         public int UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("SubClubId, UserId")]
+        public SubClubUser SubClubUser { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Web_API.Data;
+using Web_API.Entities;
 using Web_API.Helpers;
 using Web_API.Middleware;
 using Web_API.Services;
@@ -42,8 +43,20 @@ namespace Web_API
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            // TODO: why don't we add 'em as Singleton?
+            services.AddScoped<IBanRecordService, BanRecordService>();
+            services.AddScoped<IClubService, ClubService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IOfflineEventService, OfflineEventService>();
+            services.AddScoped<IOnlineEventService, OnlineEventService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IReviewAndRateService, ReviewAndRateService>();
+            services.AddScoped<ISubClubService, SubClubService>();
+            services.AddScoped<IUserService, UserService>();
+            // TODO: add services.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,9 +80,7 @@ namespace Web_API
             );
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
-
             app.UseMiddleware<JwtMiddleware>();
-            
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
