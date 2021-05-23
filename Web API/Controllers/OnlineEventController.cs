@@ -36,8 +36,8 @@ namespace Web_API.Controllers
         [HttpGet("{onlineEventId:int}")]
         public ActionResult<OnlineEventResponseViewModel> Read(int onlineEventId)
         {
-            var onlineEventInstance = _onlineEventService.Read(onlineEventId);
-            return Ok(onlineEventInstance);
+            var onlineEvent = _onlineEventService.Read(onlineEventId);
+            return Ok(onlineEvent);
         }
 
         [HttpPut("{onlineEventId:int}")]

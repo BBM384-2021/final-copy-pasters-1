@@ -63,10 +63,10 @@ namespace Web_API.Controllers
             return Ok(new { message = "Registration successful, please check your email for verification instructions" });
         }
 
-        [HttpPost("verify-email")]
-        public IActionResult VerifyEmail(VerifyEmailRequestViewModel model)
+        [HttpGet("verify-email")]
+        public IActionResult VerifyEmail(string token)
         {
-            _userService.VerifyEmail(model.Token);
+            _userService.VerifyEmail(token);
             return Ok(new { message = "Verification successful, you can now login" });
         }
 

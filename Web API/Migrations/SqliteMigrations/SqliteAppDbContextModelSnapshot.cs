@@ -16,29 +16,6 @@ namespace Web_API.Migrations.SqliteMigrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.6");
 
-            modelBuilder.Entity("Web_API.Entities.BanRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BanCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SubClubId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubClubId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("BanRecords");
-                });
-
             modelBuilder.Entity("Web_API.Entities.Club", b =>
                 {
                     b.Property<int>("Id")
@@ -215,6 +192,12 @@ namespace Web_API.Migrations.SqliteMigrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("BanCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SubClubRole")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("SubClubId", "UserId");
 
                     b.HasIndex("UserId");
@@ -273,17 +256,6 @@ namespace Web_API.Migrations.SqliteMigrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Web_API.Entities.BanRecord", b =>
-                {
-                    b.HasOne("Web_API.Entities.SubClubUser", "SubClubUser")
-                        .WithOne("BanRecord")
-                        .HasForeignKey("Web_API.Entities.BanRecord", "SubClubId", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubClubUser");
                 });
 
             modelBuilder.Entity("Web_API.Entities.OfflineEvent", b =>
@@ -556,8 +528,6 @@ namespace Web_API.Migrations.SqliteMigrations
 
             modelBuilder.Entity("Web_API.Entities.SubClubUser", b =>
                 {
-                    b.Navigation("BanRecord");
-
                     b.Navigation("Posts");
 
                     b.Navigation("Reports");

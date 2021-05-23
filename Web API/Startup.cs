@@ -1,12 +1,15 @@
 using System;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Web_API.Data;
-using Web_API.Entities;
 using Web_API.Helpers;
 using Web_API.Middleware;
 using Web_API.Services;
@@ -44,7 +47,6 @@ namespace Web_API
 
             // configure DI for application services
             // TODO: why don't we add 'em as Singleton?
-            services.AddScoped<IBanRecordService, BanRecordService>();
             services.AddScoped<IClubService, ClubService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IEmailService, EmailService>();
@@ -55,6 +57,7 @@ namespace Web_API
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReviewAndRateService, ReviewAndRateService>();
             services.AddScoped<ISubClubService, SubClubService>();
+            services.AddScoped<ISubClubUserService, SubClubUserService>();
             services.AddScoped<IUserService, UserService>();
             // TODO: add services.
         }

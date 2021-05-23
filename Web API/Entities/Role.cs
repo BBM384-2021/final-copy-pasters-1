@@ -3,7 +3,6 @@
     public enum Role
     {
         Admin,
-        SubClubAdmin,
         User
     }
 }

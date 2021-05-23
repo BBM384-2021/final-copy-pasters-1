@@ -187,7 +187,9 @@ namespace Web_API.Migrations.SqliteMigrations
                 columns: table => new
                 {
                     SubClubId = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SubClubRole = table.Column<int>(type: "INTEGER", nullable: false),
+                    BanCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,27 +225,6 @@ namespace Web_API.Migrations.SqliteMigrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BanRecords",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    BanCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    SubClubId = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BanRecords", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BanRecords_SubClubUsers_SubClubId_UserId",
-                        columns: x => new { x.SubClubId, x.UserId },
-                        principalTable: "SubClubUsers",
-                        principalColumns: new[] { "SubClubId", "UserId" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -318,12 +299,6 @@ namespace Web_API.Migrations.SqliteMigrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BanRecords_SubClubId_UserId",
-                table: "BanRecords",
-                columns: new[] { "SubClubId", "UserId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Choices_QuestionId",
                 table: "Choices",
                 column: "QuestionId");
@@ -386,9 +361,6 @@ namespace Web_API.Migrations.SqliteMigrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "BanRecords");
-
             migrationBuilder.DropTable(
                 name: "Choices");
 

@@ -22,12 +22,7 @@ namespace Web_API.Entities
         public DateTime Created { get; set; }
         public DateTime? Updated { get; set; }
         public List<RefreshToken> RefreshTokens { get; set; }
-        // delete 
-        // public ICollection<Post> Posts { get; set; }
-        // public ICollection<SubClub> SubClubs { get; set; }
-        // public ICollection<BanRecord> BanRecords { get; set; }
-        // public ICollection<Report> Reports { get; set; }
-        
+
         public ICollection<SubClubUser> SubClubUsers { get; set; }
         public bool OwnsToken(string token) 
         {

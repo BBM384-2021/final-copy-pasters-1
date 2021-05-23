@@ -7,8 +7,6 @@ namespace Web_API.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Choice> Choices { get; set; }
-        public DbSet<BanRecord> BanRecords { get; set; }
-
         public DbSet<Club> Clubs { get; set; }
 
         public DbSet<Comment> Comments { get; set; }

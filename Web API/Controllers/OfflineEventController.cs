@@ -36,8 +36,8 @@ namespace Web_API.Controllers
         [HttpGet("{offlineEventId:int}")]
         public ActionResult<OfflineEventResponseViewModel> Read(int offlineEventId)
         {
-            var offlineEventInstance = _offlineEventService.Read(offlineEventId);
-            return Ok(offlineEventInstance);
+            var offlineEvent = _offlineEventService.Read(offlineEventId);
+            return Ok(offlineEvent);
         }
 
         [HttpPut("{offlineEventId:int}")]

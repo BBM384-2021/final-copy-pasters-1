@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web_API.Entities
 {
     public class SubClubUser
     {
-        public BanRecord BanRecord { get; set; }
-        public ICollection<Report> Reports { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public SubClubRole SubClubRole { get; set; }
+        public int BanCount { get; set; }
+
+        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
 
         [ForeignKey("SubClub"), Column(Order=0)]
         public int SubClubId { get; set; }
