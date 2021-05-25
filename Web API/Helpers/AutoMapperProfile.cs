@@ -30,7 +30,7 @@ namespace Web_API.Helpers
                         }
 
                         // ignore null role
-                        return x.DestinationMember.Name != "Role" || src.Role != null;
+                        return x.DestinationMember.Name != "Role";
                     }
                 ));
         }

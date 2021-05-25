@@ -14,6 +14,7 @@ using Web_API.Entities;
 using Web_API.Helpers;
 using Web_API.ViewModels.User.Request;
 using Web_API.ViewModels.User.Response;
+using static System.Enum;
 
 namespace Web_API.Services
 {
@@ -31,6 +32,7 @@ namespace Web_API.Services
         UserResponseViewModel GetById(int id);
         UserResponseViewModel Create(CreateRequestViewModel model);
         UserResponseViewModel Update(int id, UpdateRequestViewModel model);
+        public UserResponseViewModel UpdateRole(int id, UpdateRoleRequestViewModel model);
         void Delete(int id);
     }
 
@@ -258,6 +260,22 @@ namespace Web_API.Services
             return _mapper.Map<UserResponseViewModel>(user);
         }
 
+        public UserResponseViewModel UpdateRole(int id, UpdateRoleRequestViewModel model)
+        {
+            var user = GetUser(id);
+            var tryParse = TryParse(model.Role, out Role outValue);
+            if (!tryParse) return _mapper.Map<UserResponseViewModel>(user);
+            
+            user.Role = outValue;
+            user.Updated = DateTime.UtcNow;
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            return _mapper.Map<UserResponseViewModel>(user);
+        }
+        
+
         public void Delete(int id)
         {
             var user = GetUser(id);
@@ -285,19 +303,25 @@ namespace Web_API.Services
 
         private string GenerateJwtToken(User user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            // TODO: these are the necessities to evaluate authorizations.
+            var claims = new List<Claim>
             {
-                Subject = new ClaimsIdentity(new[] {new Claim("id", user.Id.ToString())}),
-                Expires = DateTime.UtcNow.AddMinutes(15),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                new Claim("Id", user.Id.ToString()),
+                new Claim("UserType", user.Role.ToString())
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
 
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(30.0),
+                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        
         private RefreshToken GenerateRefreshToken(string ipAddress)
         {
             return new RefreshToken

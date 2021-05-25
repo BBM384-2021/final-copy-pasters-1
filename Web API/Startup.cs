@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Web_API.Authorization.Handlers;
+using Web_API.Authorization.Requirements;
 using Web_API.Data;
 using Web_API.Helpers;
 using Web_API.Middleware;
@@ -39,11 +42,89 @@ namespace Web_API
             services.AddCors();
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSwaggerGen();
+            //services.AddSwaggerGen();
+            // services.AddSwaggerGen(c =>
+            // {
+            //     c.SwaggerDoc("v1", new OpenApiInfo {Title = "Web API", Version = "v1"});
+            //     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            //     {
+            //         In = ParameterLocation.Header,
+            //         Description = "Please enter JWT with Bearer into field",
+            //         Name = "Authorization",
+            //         Type = SecuritySchemeType.ApiKey
+            //     });
+            //     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            //     {
+            //         {
+            //             new OpenApiSecurityScheme
+            //             {
+            //                 Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "Bearer"}
+            //             },
+            //             Array.Empty<string>()
+            //         }
+            //     });
+            // });
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web API", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer",
+                    Description = "Please insert JWT token into field"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["AppSettings:Secret"])),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            services
+                .AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
+                .AddJwtBearer(cfg => { cfg.TokenValidationParameters = tokenValidationParameters; });
+
+
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("Admin", policy => policy.RequireClaim("UserType", "Admin"));
+                cfg.AddPolicy("LoggedIn", policy => policy.RequireClaim("Id"));
+                cfg.AddPolicy("SubClubMember", policy=> policy.Requirements.Add(new SubClubMemberRequirement()));
+                cfg.AddPolicy("SelfOrAdmin", policy => policy.Requirements.Add(new SelfOrAdminRequirement()));
+                cfg.AddPolicy("SubClubAdmin", policy => policy.Requirements.Add(new SubClubAdminRequirement()));
+            });
+
+            services.AddTransient<IAuthorizationHandler, SubClubAdminHandler>();
+            services.AddTransient<IAuthorizationHandler, SelfHandler>();
+            services.AddTransient<IAuthorizationHandler, AdminHandler>();
 
             // configure DI for application services
             // TODO: why don't we add 'em as Singleton?
@@ -76,14 +157,15 @@ namespace Web_API
             app.UseRouting();
 
             app.UseCors(x => x
-                    .SetIsOriginAllowed(origin => true)
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
             );
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
-            app.UseMiddleware<JwtMiddleware>();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

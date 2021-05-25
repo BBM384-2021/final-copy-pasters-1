@@ -5,9 +5,6 @@ namespace Web_API.ViewModels.User.Request
     public class RegisterRequestViewModel
     {
         [Required]
-        public string Title { get; set; }
-
-        [Required]
         public string FirstName { get; set; }
 
         [Required]

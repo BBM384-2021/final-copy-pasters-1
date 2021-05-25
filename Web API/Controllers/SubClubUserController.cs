@@ -18,7 +18,6 @@ namespace Web_API.Controllers
             _subClubUserService = subClubUserService;
         }
 
-        [Helpers.Authorize(Role.Admin)]
         [HttpPost]
         public ActionResult<SubClubUserResponseViewModel> Create(
             [FromBody] CreateSubClubUserRequestViewModel model)
@@ -27,7 +26,6 @@ namespace Web_API.Controllers
             return Ok(response);
         }
         
-        [Helpers.Authorize(Role.Admin)]
         [HttpGet]
         public ActionResult<IEnumerable<SubClubUserResponseViewModel>> Read()
         {
@@ -35,7 +33,6 @@ namespace Web_API.Controllers
             return Ok(subClubUsers);
         }
         
-        [Helpers.Authorize(Role.Admin)]
         [HttpGet("{subClubId:int}/{userId:int}")]
         public ActionResult<SubClubUserResponseViewModel> Read(int subClubId, int userId)
         {

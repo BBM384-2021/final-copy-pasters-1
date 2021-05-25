@@ -9,7 +9,7 @@ using Web_API.Data;
 namespace Web_API.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteAppDbContext))]
-    [Migration("20210522195246_InitialCreate")]
+    [Migration("20210524234850_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,9 +242,6 @@ namespace Web_API.Migrations.SqliteMigrations
 
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("TEXT");

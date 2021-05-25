@@ -241,9 +241,6 @@ namespace Web_API.Migrations.SqliteMigrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("TEXT");
 
