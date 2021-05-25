@@ -9,6 +9,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Web_API.Data;
 using Web_API.Entities;
 using Web_API.Helpers;
@@ -42,7 +45,7 @@ namespace Web_API.Services
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly IEmailService _emailService;
-
+        private readonly AuthorizationHandlerContext _authContext;
         public UserService(
             AppDbContext context,
             IMapper mapper,

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Web_API.Authorization.Requirements;
 using Web_API.Data;
@@ -9,19 +10,21 @@ namespace Web_API.Authorization.Handlers
 {
     public class SubClubMemberHandler : AuthorizationHandler<SubClubMemberRequirement>
     {
-        private readonly AppDbContext _context;
-        public SubClubMemberHandler(AppDbContext context)
+        private readonly AppDbContext _appDbContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SubClubMemberHandler(AppDbContext appDbContext, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
+            _appDbContext = appDbContext;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, SubClubMemberRequirement requirement)
         {
-            if (context.Resource is not AuthorizationFilterContext authContext) return Task.CompletedTask;
-            if (authContext.RouteData.Values["subClubId"] == null) return Task.CompletedTask;
-            var subClubId = (int) authContext.RouteData.Values["subClubId"];
+            // TODO: WE'RE HERE.
+            var routeValues = _httpContextAccessor.HttpContext.Request.RouteValues;
+            routeValues.TryGetValue("subClubId", out var subClubId);
             var userId = context.User.FindFirst(c => c.Type == "Id")?.Value;
-            var subClubUser = _context.SubClubUsers.Find(subClubId, userId);
+            var subClubUser = _appDbContext.SubClubUsers.Find(subClubId.ToString(), userId);
             
             // For the sake of simplicity, I've written the expression that checks the user is in the subclub in question as such.
             if (subClubUser.SubClubRole == SubClubRole.Admin || subClubUser.SubClubRole == SubClubRole.Member)

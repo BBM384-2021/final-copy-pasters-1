@@ -36,7 +36,7 @@ namespace Web_API.Controllers
             return Ok(response);
         }
         
-        [Authorize(Policy = "SelfOrAdmin")]
+       //[Authorize(Policy = "SelfOrAdmin")]
         [HttpPost("revoke-token")]
         public IActionResult RevokeToken(RevokeTokenRequestViewModel model)
         {
@@ -108,7 +108,7 @@ namespace Web_API.Controllers
         }
         
         
-        [Authorize(Policy = "SelfOrAdmin")]
+        //[Authorize(Policy = "SelfOrAdmin")]
         [HttpPut("{userId:int}")]
         public ActionResult<UserResponseViewModel> Update(int userId, UpdateRequestViewModel model)
         {

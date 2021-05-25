@@ -112,6 +112,7 @@ namespace Web_API
                 .AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
                 .AddJwtBearer(cfg => { cfg.TokenValidationParameters = tokenValidationParameters; });
 
+            services.AddHttpContextAccessor();
 
             services.AddAuthorization(cfg =>
             {
@@ -124,6 +125,7 @@ namespace Web_API
 
             services.AddTransient<IAuthorizationHandler, SubClubAdminHandler>();
             services.AddTransient<IAuthorizationHandler, SelfHandler>();
+            services.AddTransient<IAuthorizationHandler, SubClubMemberHandler>();
             services.AddTransient<IAuthorizationHandler, AdminHandler>();
 
             // configure DI for application services

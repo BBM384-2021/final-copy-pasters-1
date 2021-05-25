@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web_API.Services;
 using Web_API.ViewModels.Club.Request;
@@ -6,6 +7,7 @@ using Web_API.ViewModels.Club.Response;
 
 namespace Web_API.Controllers
 {
+    //[Authorize(Policy = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class ClubController : BaseController
